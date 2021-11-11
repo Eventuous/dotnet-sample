@@ -6,6 +6,7 @@ using Serilog;
 using Serilog.Events;
 
 // using var listener = new TestEventListener();
+// using var activityListener = new TestActivityListener();
 
 TypeMap.RegisterKnownEventTypes(typeof(BookingEvents.V1.RoomBooked).Assembly);
 
@@ -24,9 +25,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddEventuous();
-
 builder.Services.AddOpenTelemetry();
+
+builder.Services.AddEventuous();
 
 var app = builder.Build();
 

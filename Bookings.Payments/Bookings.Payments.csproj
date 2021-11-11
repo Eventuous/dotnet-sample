@@ -7,10 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Eventuous.Shovel" Version="0.5.16-alpha.0.9" />
-        <PackageReference Include="Eventuous.EventStore" Version="0.5.16-alpha.0.9" />
-        <PackageReference Include="Eventuous.Diagnostics.OpenTelemetry" Version="0.5.16-alpha.0.9" />
-        <PackageReference Include="Eventuous.Projections.MongoDB" Version="0.5.16-alpha.0.9" />
+        <PackageReference Include="Eventuous.Shovel" Version="0.5.16-alpha.0.15" />
+        <PackageReference Include="Eventuous.EventStore" Version="0.5.16-alpha.0.15" />
+        <PackageReference Include="Eventuous.Diagnostics.OpenTelemetry" Version="0.5.16-alpha.0.15" />
+        <PackageReference Include="Eventuous.Projections.MongoDB" Version="0.5.16-alpha.0.15" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
         <PackageReference Include="OpenTelemetry.Exporter.Zipkin" Version="1.2.0-beta1" />
         <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc8" />
