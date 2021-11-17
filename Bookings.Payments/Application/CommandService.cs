@@ -9,10 +9,9 @@ public class CommandService : ApplicationService<Payment, PaymentState, PaymentI
             (payment, cmd) => payment.ProcessPayment(
                 new PaymentId(cmd.PaymentId),
                 cmd.BookingId,
-                cmd.Amount,
+                new Money(cmd.Amount, cmd.Currency),
                 cmd.Method, 
-                cmd.Provider,
-                cmd.Currency
+                cmd.Provider
             )
         );
     }
