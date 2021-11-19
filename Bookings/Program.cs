@@ -2,11 +2,9 @@ using Bookings;
 using Bookings.Domain.Bookings;
 using Bookings.Infrastructure;
 using Eventuous;
+using Eventuous.AspNetCore;
 using Serilog;
 using Serilog.Events;
-
-// using var listener = new TestEventListener();
-// using var activityListener = new TestActivityListener();
 
 TypeMap.RegisterKnownEventTypes(typeof(BookingEvents.V1.RoomBooked).Assembly);
 
@@ -19,7 +17,7 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddSerilog();
+builder.Host.UseSerilog();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -30,10 +28,10 @@ builder.Services.AddOpenTelemetry();
 builder.Services.AddEventuous();
 
 var app = builder.Build();
+app.AddEventuousLogs();
 
 if (app.Environment.IsDevelopment()) {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwagger().UseSwaggerUI();
 }
 
 app.MapControllers();

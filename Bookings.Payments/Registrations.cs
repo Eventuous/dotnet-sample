@@ -4,7 +4,6 @@ using Bookings.Payments.Infrastructure;
 using Bookings.Payments.Integration;
 using Eventuous;
 using Eventuous.Diagnostics.OpenTelemetry;
-using Eventuous.Diagnostics.Registrations;
 using Eventuous.EventStore;
 using Eventuous.EventStore.Producers;
 using Eventuous.EventStore.Subscriptions;
@@ -18,10 +17,8 @@ namespace Bookings.Payments;
 public static class Registrations {
     public static void AddServices(this IServiceCollection services) {
         services.AddEventStoreClient("esdb://localhost:2113?tls=false");
-        services.AddEventStore<EsdbEventStore>();
-        services.AddApplicationService<CommandService, PaymentState, PaymentId>();
-        services.AddSingleton<IAggregateStore, AggregateStore>();
-
+        services.AddAggregateStore<EsdbEventStore>();
+        services.AddApplicationService<CommandService, Payment>();
         services.AddSingleton(Mongo.ConfigureMongo());
         services.AddCheckpointStore<MongoCheckpointStore>();
         services.AddEventProducer<EventStoreProducer>();

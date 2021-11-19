@@ -1,7 +1,5 @@
 using Bookings.Domain.Bookings;
 using Eventuous;
-using Eventuous.Subscriptions;
-using Eventuous.Subscriptions.Context;
 using static Bookings.Application.Bookings.BookingCommands;
 using static Bookings.Integration.IntegrationEvents;
 using EventHandler = Eventuous.Subscriptions.EventHandler;
@@ -11,11 +9,11 @@ namespace Bookings.Integration;
 public class PaymentsIntegrationHandler : EventHandler {
     public static readonly StreamName Stream = new("PaymentsIntegration");
 
-    readonly IApplicationService<BookingState, BookingId> _applicationService;
+    readonly IApplicationService<Booking> _applicationService;
 
-    public PaymentsIntegrationHandler(IApplicationService<BookingState, BookingId> applicationService) {
+    public PaymentsIntegrationHandler(IApplicationService<Booking> applicationService) {
         _applicationService = applicationService;
-        On<BookingPaymentRecorded>((ctx, ct) => HandlePayment(ctx.Message, ct));
+        On<BookingPaymentRecorded>(async ctx => await HandlePayment(ctx.Message, ctx.CancellationToken));
     }
 
     Task HandlePayment(BookingPaymentRecorded evt, CancellationToken cancellationToken)

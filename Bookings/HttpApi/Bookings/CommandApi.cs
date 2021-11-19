@@ -7,9 +7,9 @@ namespace Bookings.HttpApi.Bookings;
 
 [Route("/booking")]
 public class CommandApi : ControllerBase {
-    readonly IApplicationService<BookingState, BookingId> _service;
+    readonly IApplicationService<Booking> _service;
 
-    public CommandApi(IApplicationService<BookingState, BookingId> service) => _service = service;
+    public CommandApi(IApplicationService<Booking> service) => _service = service;
 
     [HttpPost]
     [Route("book")]
@@ -18,8 +18,6 @@ public class CommandApi : ControllerBase {
 
     [HttpPost]
     [Route("recordPayment")]
-    public Task<Result<BookingState, BookingId>> RecordPayment(
-        [FromBody] RecordPayment cmd, CancellationToken cancellationToken
-    )
+    public Task<Result> RecordPayment([FromBody] RecordPayment cmd, CancellationToken cancellationToken)
         => _service.Handle(cmd, cancellationToken);
 }

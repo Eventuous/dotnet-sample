@@ -1,22 +1,17 @@
 using System.Diagnostics.Tracing;
-using Serilog;
 
-namespace Bookings.Infrastructure;
+namespace Bookings.Payments.Infrastructure;
 
-public class TestEventListener : EventListener {
-    readonly string[]?         _prefixes;
+public sealed class TestEventListener : EventListener {
+    readonly string[]          _prefixes = { "OpenTelemetry", "eventuous" };
     readonly List<EventSource> _eventSources = new();
-
-    public TestEventListener(params string[] prefixes) {
-        _prefixes = prefixes.Length > 0 ? prefixes : new[] { "OpenTelemetry", "eventuous" };
-    }
-
     protected override void OnEventSourceCreated(EventSource? eventSource) {
-        if (_prefixes == null || eventSource?.Name == null) {
+        if (eventSource?.Name == null) {
             return;
         }
 
         if (_prefixes.Any(x => eventSource.Name.StartsWith(x))) {
+            Console.WriteLine($"Event source created: {eventSource.Name}");
             _eventSources.Add(eventSource);
             EnableEvents(eventSource, EventLevel.Verbose, EventKeywords.All);
         }
@@ -24,6 +19,7 @@ public class TestEventListener : EventListener {
         base.OnEventSourceCreated(eventSource);
     }
 
+#nullable disable
     protected override void OnEventWritten(EventWrittenEventArgs evt) {
         string message;
 
@@ -34,13 +30,14 @@ public class TestEventListener : EventListener {
             message = evt.Message;
         }
 
-        Log.Debug(
+        Console.WriteLine(
             $"{evt.EventSource.Name} - EventId: [{evt.EventId}], EventName: [{evt.EventName}], Message: [{message}]"
         );
     }
+#nullable enable
 
     public override void Dispose() {
-        foreach (var eventSource in this._eventSources) {
+        foreach (var eventSource in _eventSources) {
             DisableEvents(eventSource);
         }
 

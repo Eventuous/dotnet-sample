@@ -3,10 +3,8 @@ using Bookings.Domain;
 using Bookings.Domain.Bookings;
 using Bookings.Infrastructure;
 using Bookings.Integration;
-using Eventuous;
 using Eventuous.Diagnostics.OpenTelemetry;
 using Eventuous.Diagnostics.OpenTelemetry.Subscriptions;
-using Eventuous.Diagnostics.Registrations;
 using Eventuous.EventStore;
 using Eventuous.EventStore.Subscriptions;
 using Eventuous.Projections.MongoDB;
@@ -19,19 +17,18 @@ namespace Bookings;
 public static class Registrations {
     public static void AddEventuous(this IServiceCollection services) {
         services.AddEventStoreClient("esdb://localhost:2113?tls=false");
-        services.AddEventStore<EsdbEventStore>();
-        services.AddApplicationService<BookingsCommandService, BookingState, BookingId>();
-        services.AddSingleton<IAggregateStore, AggregateStore>();
+        services.AddAggregateStore<EsdbEventStore>();
+        services.AddApplicationService<BookingsCommandService, Booking>();
 
         services.AddSingleton<Services.IsRoomAvailable>((id,   period) => new ValueTask<bool>(true));
         services.AddSingleton<Services.ConvertCurrency>((from, currency) => new Money(from.Amount * 2, currency));
 
         services.AddSingleton(Mongo.ConfigureMongo());
         services.AddCheckpointStore<MongoCheckpointStore>();
+
         services.AddSubscription<AllStreamSubscription, AllStreamSubscriptionOptions>(
             "BookingsProjections",
-            builder => builder
-                .AddEventHandler<BookingStateProjection>()
+            builder => builder.AddEventHandler<BookingStateProjection>()
         );
 
         services.AddSubscription<StreamSubscription, StreamSubscriptionOptions>(

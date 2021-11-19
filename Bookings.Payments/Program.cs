@@ -1,12 +1,14 @@
 using Bookings.Payments;
 using Bookings.Payments.Infrastructure;
 using Eventuous;
+using Eventuous.AspNetCore;
+using Serilog;
+
 TypeMap.RegisterKnownEventTypes();
 Logging.ConfigureLog();
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSerilog();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -15,8 +17,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddOpenTelemetry();
 
 builder.Services.AddServices();
+builder.Host.UseSerilog();
 
 var app = builder.Build();
+app.AddEventuousLogs();
 
 if (app.Environment.IsDevelopment()) {
     app.UseSwagger();
