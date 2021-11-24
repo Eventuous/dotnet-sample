@@ -1,4 +1,5 @@
-using Bookings.Application.Bookings;
+using Bookings.Application;
+using Bookings.Application.Queries;
 using Bookings.Domain;
 using Bookings.Domain.Bookings;
 using Bookings.Infrastructure;
@@ -20,7 +21,8 @@ public static class Registrations {
         services.AddAggregateStore<EsdbEventStore>();
         services.AddApplicationService<BookingsCommandService, Booking>();
 
-        services.AddSingleton<Services.IsRoomAvailable>((id,   period) => new ValueTask<bool>(true));
+        services.AddSingleton<Services.IsRoomAvailable>((id, period) => new ValueTask<bool>(true));
+
         services.AddSingleton<Services.ConvertCurrency>((from, currency) => new Money(from.Amount * 2, currency));
 
         services.AddSingleton(Mongo.ConfigureMongo());
@@ -28,7 +30,9 @@ public static class Registrations {
 
         services.AddSubscription<AllStreamSubscription, AllStreamSubscriptionOptions>(
             "BookingsProjections",
-            builder => builder.AddEventHandler<BookingStateProjection>()
+            builder => builder
+                .AddEventHandler<BookingStateProjection>()
+                .AddEventHandler<MyBookingsProjection>()
         );
 
         services.AddSubscription<StreamSubscription, StreamSubscriptionOptions>(

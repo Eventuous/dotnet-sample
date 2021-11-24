@@ -1,12 +1,12 @@
-namespace Bookings.Application.Bookings;
+namespace Bookings.Application;
 
 public static class BookingCommands {
     public record BookRoom(
         string         BookingId,
         string         GuestId,
         string         RoomId,
-        DateTimeOffset CheckInDate,
-        DateTimeOffset CheckOutDate,
+        DateTime       CheckInDate,
+        DateTime       CheckOutDate,
         float          BookingPrice,
         float          PrepaidAmount,
         string         Currency,

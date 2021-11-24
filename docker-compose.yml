@@ -33,14 +33,14 @@ services:
     ports:
       - "9411:9411"
 
-#  prometheus:
-#    container_name: infozone-prometheus
-#    image: prom/prometheus:v2.17.1
-#    ports:
-#      - "9090:9090"
-#    volumes:
-#      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-#
+  prometheus:
+    container_name: infozone-prometheus
+    image: prom/prometheus:v2.17.1
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
 #  grafana:
 #    container_name: infozone-grafana
 #    image: grafana/grafana:6.7.2

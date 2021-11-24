@@ -1,4 +1,5 @@
 using Eventuous;
+using NodaTime;
 
 namespace Bookings.Domain.Bookings;
 
@@ -9,8 +10,8 @@ public static class BookingEvents {
             string         BookingId,
             string         GuestId,
             string         RoomId,
-            DateTimeOffset CheckInDate,
-            DateTimeOffset CheckOutDate,
+            LocalDate      CheckInDate,
+            LocalDate      CheckOutDate,
             float          BookingPrice,
             float          PrepaidAmount,
             float          OutstandingAmount,

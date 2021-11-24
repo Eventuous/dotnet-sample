@@ -1,9 +1,10 @@
 using Bookings.Domain;
 using Bookings.Domain.Bookings;
 using Eventuous;
-using static Bookings.Application.Bookings.BookingCommands;
+using NodaTime;
+using static Bookings.Application.BookingCommands;
 
-namespace Bookings.Application.Bookings;
+namespace Bookings.Application;
 
 public class BookingsCommandService : ApplicationService<Booking, BookingState, BookingId> {
     public BookingsCommandService(IAggregateStore store, Services.IsRoomAvailable isRoomAvailable) : base(store) {
@@ -12,7 +13,7 @@ public class BookingsCommandService : ApplicationService<Booking, BookingState, 
                 new BookingId(cmd.BookingId),
                 cmd.GuestId,
                 new RoomId(cmd.RoomId),
-                new StayPeriod(cmd.CheckInDate, cmd.CheckOutDate),
+                new StayPeriod(LocalDate.FromDateTime(cmd.CheckInDate), LocalDate.FromDateTime(cmd.CheckOutDate)),
                 new Money(cmd.BookingPrice, cmd.Currency),
                 new Money(cmd.PrepaidAmount, cmd.Currency),
                 DateTimeOffset.Now,

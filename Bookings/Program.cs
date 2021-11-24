@@ -3,6 +3,8 @@ using Bookings.Domain.Bookings;
 using Bookings.Infrastructure;
 using Eventuous;
 using Eventuous.AspNetCore;
+using NodaTime;
+using NodaTime.Serialization.SystemTextJson;
 using Serilog;
 using Serilog.Events;
 
@@ -19,7 +21,9 @@ Log.Logger = new LoggerConfiguration()
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog();
 
-builder.Services.AddControllers();
+builder.Services
+    .AddControllers()
+    .AddJsonOptions(cfg => cfg.JsonSerializerOptions.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

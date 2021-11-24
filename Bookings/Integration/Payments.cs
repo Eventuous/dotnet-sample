@@ -1,6 +1,6 @@
 using Bookings.Domain.Bookings;
 using Eventuous;
-using static Bookings.Application.Bookings.BookingCommands;
+using static Bookings.Application.BookingCommands;
 using static Bookings.Integration.IntegrationEvents;
 using EventHandler = Eventuous.Subscriptions.EventHandler;
 

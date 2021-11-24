@@ -1,7 +1,7 @@
 using Bookings.Domain.Bookings;
 using Eventuous;
 using Microsoft.AspNetCore.Mvc;
-using static Bookings.Application.Bookings.BookingCommands;
+using static Bookings.Application.BookingCommands;
 
 namespace Bookings.HttpApi.Bookings;
 
