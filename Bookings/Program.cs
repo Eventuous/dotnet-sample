@@ -1,6 +1,5 @@
 using Bookings;
 using Bookings.Domain.Bookings;
-using Bookings.Infrastructure;
 using Eventuous;
 using Eventuous.AspNetCore;
 using NodaTime;
@@ -14,8 +13,11 @@ Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
     .MinimumLevel.Override("Grpc", LogEventLevel.Information)
+    .MinimumLevel.Override("Grpc.Net.Client.Internal.GrpcCall", LogEventLevel.Error)
+    .MinimumLevel.Override("Microsoft.AspNetCore.Mvc.Infrastructure", LogEventLevel.Warning)
     .Enrich.FromLogContext()
     .WriteTo.Console()
+    .WriteTo.Seq("http://localhost:5341")
     .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);

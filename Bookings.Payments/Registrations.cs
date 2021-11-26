@@ -2,13 +2,13 @@ using Bookings.Payments.Application;
 using Bookings.Payments.Domain;
 using Bookings.Payments.Infrastructure;
 using Bookings.Payments.Integration;
-using Eventuous;
 using Eventuous.Diagnostics.OpenTelemetry;
 using Eventuous.EventStore;
 using Eventuous.EventStore.Producers;
 using Eventuous.EventStore.Subscriptions;
 using Eventuous.Producers;
 using Eventuous.Projections.MongoDB;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
@@ -31,6 +31,13 @@ public static class Registrations {
     }
     
     public static void AddOpenTelemetry(this IServiceCollection services) {
+        services.AddOpenTelemetryMetrics(
+            builder => builder
+                .AddAspNetCoreInstrumentation()
+                .AddEventuous()
+                .AddEventuousSubscriptions()
+                .AddPrometheusExporter()
+        );
         services.AddOpenTelemetryTracing(
             builder => builder
                 .AddAspNetCoreInstrumentation()

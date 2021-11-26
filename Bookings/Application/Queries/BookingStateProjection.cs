@@ -1,5 +1,4 @@
 using Eventuous.Projections.MongoDB;
-using Eventuous.Subscriptions.Context;
 using MongoDB.Driver;
 using static Bookings.Domain.Bookings.BookingEvents;
 
@@ -9,31 +8,27 @@ namespace Bookings.Application.Queries;
 
 public class BookingStateProjection : MongoProjection<BookingDocument> {
     public BookingStateProjection(IMongoDatabase database) : base(database) {
-        On<V1.RoomBooked>(HandleRoomBooked);
+        On<V1.RoomBooked>(evt => evt.BookingId, HandleRoomBooked);
 
         On<V1.PaymentRecorded>(
-            ctx
-                => UpdateOperationTask(
-                    ctx.Message.BookingId,
-                    update => update.Set(x => x.Outstanding, ctx.Message.Outstanding)
-                )
+            evt => evt.BookingId,
+            (evt, update) => update.Set(x => x.Outstanding, evt.Outstanding)
         );
 
         On<V1.BookingFullyPaid>(
-            ctx
-                => UpdateOperationTask(ctx.Message.BookingId, update => update.Set(x => x.Paid, true))
+            evt => evt.BookingId,
+            (_, update) => update.Set(x => x.Paid, true)
         );
     }
 
-    ValueTask<Operation<BookingDocument>> HandleRoomBooked(MessageConsumeContext<V1.RoomBooked> ctx)
-        => UpdateOperationTask(
-            ctx.Message.BookingId,
-            update => update.SetOnInsert(x => x.Id, ctx.Message.BookingId)
-                .Set(x => x.GuestId, ctx.Message.GuestId)
-                .Set(x => x.RoomId, ctx.Message.RoomId)
-                .Set(x => x.CheckInDate, ctx.Message.CheckInDate)
-                .Set(x => x.CheckOutDate, ctx.Message.CheckOutDate)
-                .Set(x => x.BookingPrice, ctx.Message.BookingPrice)
-                .Set(x => x.Outstanding, ctx.Message.OutstandingAmount)
-        );
+    static UpdateDefinition<BookingDocument> HandleRoomBooked(
+        V1.RoomBooked evt, UpdateDefinitionBuilder<BookingDocument> update
+    )
+        => update.SetOnInsert(x => x.Id, evt.BookingId)
+            .Set(x => x.GuestId, evt.GuestId)
+            .Set(x => x.RoomId, evt.RoomId)
+            .Set(x => x.CheckInDate, evt.CheckInDate)
+            .Set(x => x.CheckOutDate, evt.CheckOutDate)
+            .Set(x => x.BookingPrice, evt.BookingPrice)
+            .Set(x => x.Outstanding, evt.OutstandingAmount);
 }

@@ -27,6 +27,7 @@ if (app.Environment.IsDevelopment()) {
     app.UseSwaggerUI();
 }
 
+app.UseOpenTelemetryPrometheusScrapingEndpoint();
 app.MapControllers();
 
 app.Run();
