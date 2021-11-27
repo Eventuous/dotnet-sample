@@ -1,23 +1,23 @@
 using Bookings.Domain.Bookings;
 using Eventuous;
+using Eventuous.AspNetCore.Web;
 using Microsoft.AspNetCore.Mvc;
 using static Bookings.Application.BookingCommands;
 
 namespace Bookings.HttpApi.Bookings;
 
 [Route("/booking")]
-public class CommandApi : ControllerBase {
-    readonly IApplicationService<Booking> _service;
+public class CommandApi : CommandHttpApiBase<Booking> {
 
-    public CommandApi(IApplicationService<Booking> service) => _service = service;
+    public CommandApi(IApplicationService<Booking> service) : base(service) { }
 
     [HttpPost]
     [Route("book")]
-    public Task BookRoom([FromBody] BookRoom cmd, CancellationToken cancellationToken)
-        => _service.Handle(cmd, cancellationToken);
+    public Task<ActionResult<Result>> BookRoom([FromBody] BookRoom cmd, CancellationToken cancellationToken)
+        => Handle(cmd, cancellationToken);
 
     [HttpPost]
     [Route("recordPayment")]
-    public Task<Result> RecordPayment([FromBody] RecordPayment cmd, CancellationToken cancellationToken)
-        => _service.Handle(cmd, cancellationToken);
+    public Task<ActionResult<Result>> RecordPayment([FromBody] RecordPayment cmd, CancellationToken cancellationToken)
+        => Handle(cmd, cancellationToken);
 }

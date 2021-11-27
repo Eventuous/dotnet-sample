@@ -1,7 +1,10 @@
 using Bookings.Payments;
+using Bookings.Payments.Application;
+using Bookings.Payments.Domain;
 using Bookings.Payments.Infrastructure;
 using Eventuous;
 using Eventuous.AspNetCore;
+using MongoDB.Bson.Serialization;
 using Serilog;
 
 TypeMap.RegisterKnownEventTypes();

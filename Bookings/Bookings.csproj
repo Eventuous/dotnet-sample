@@ -3,7 +3,7 @@
         <PackageReference Include="Eventuous.Diagnostics.OpenTelemetry" Version="$(EventuousVersion)" />
         <PackageReference Include="Eventuous.EventStore" Version="$(EventuousVersion)" />
         <PackageReference Include="Eventuous.Projections.MongoDB" Version="$(EventuousVersion)" />
-        <PackageReference Include="Eventuous.AspNetCore" Version="$(EventuousVersion)" />
+        <PackageReference Include="Eventuous.AspNetCore.Web" Version="$(EventuousVersion)" />
         <PackageReference Include="MongoDb.Bson.NodaTime" Version="3.0.0" />
         <PackageReference Include="MongoDB.Driver.Core.Extensions.OpenTelemetry" Version="1.0.0" />
         <PackageReference Include="NodaTime.Serialization.SystemTextJson" Version="1.0.0" />
@@ -18,10 +18,6 @@
     </ItemGroup>
 
     <ItemGroup>
-<!--      <ProjectReference Include="..\..\..\ubiquitous\eventuous\dotnet\src\Core\src\Eventuous.AspNetCore\Eventuous.AspNetCore.csproj" />-->
-<!--      <ProjectReference Include="..\..\..\ubiquitous\eventuous\dotnet\src\Diagnostics\src\Eventuous.Diagnostics.OpenTelemetry\Eventuous.Diagnostics.OpenTelemetry.csproj" />-->
-<!--      <ProjectReference Include="..\..\..\ubiquitous\eventuous\dotnet\src\EventStore\src\Eventuous.EventStore\Eventuous.EventStore.csproj" />-->
-<!--      <ProjectReference Include="..\..\..\ubiquitous\eventuous\dotnet\src\Mongo\src\Eventuous.Projections.MongoDB\Eventuous.Projections.MongoDB.csproj" />-->
       <ProjectReference Include="..\Bookings.Domain\Bookings.Domain.csproj" />
     </ItemGroup>
 </Project>
