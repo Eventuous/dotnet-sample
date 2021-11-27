@@ -1,5 +1,6 @@
 using Bookings.Payments.Domain;
 using Eventuous;
+using Eventuous.AspNetCore.Web;
 
 namespace Bookings.Payments.Application;
 
@@ -17,6 +18,8 @@ public class CommandService : ApplicationService<Payment, PaymentState, PaymentI
     }
 }
 
+[AggregateCommands(typeof(Payment))]
 public static class PaymentCommands {
+    [HttpCommand]
     public record RecordPayment(string PaymentId, string BookingId, float Amount, string Currency, string Method, string Provider);
 }

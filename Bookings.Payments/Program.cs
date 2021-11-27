@@ -12,7 +12,6 @@ Logging.ConfigureLog();
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -25,12 +24,12 @@ builder.Host.UseSerilog();
 var app = builder.Build();
 app.AddEventuousLogs();
 
-if (app.Environment.IsDevelopment()) {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+app.UseSwagger();
 app.UseOpenTelemetryPrometheusScrapingEndpoint();
-app.MapControllers();
+
+// Here we discover commands by their annotations
+app.MapDiscoveredCommands();
+
+app.UseSwaggerUI();
 
 app.Run();
