@@ -36,15 +36,13 @@ builder.Services.AddEventuous();
 var app = builder.Build();
 app.AddEventuousLogs();
 
-if (app.Environment.IsDevelopment()) {
-    app.UseSwagger().UseSwaggerUI();
-}
+app.UseSwagger().UseSwaggerUI();
 
 app.MapControllers();
 app.UseOpenTelemetryPrometheusScrapingEndpoint();
 
 try {
-    app.Run();
+    app.Run("http://*:5003");
     return 0;
 }
 catch (Exception e) {

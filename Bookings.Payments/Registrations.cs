@@ -24,7 +24,7 @@ public static class Registrations {
         services.AddEventProducer<EventStoreProducer>();
 
         services
-            .AddShovel<AllStreamSubscription, AllStreamSubscriptionOptions, EventStoreProducer>(
+            .AddGateway<AllStreamSubscription, AllStreamSubscriptionOptions, EventStoreProducer>(
                 "IntegrationSubscription",
                 PaymentsShovel.Transform
             );
