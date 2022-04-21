@@ -41,11 +41,12 @@ public static class Registrations {
         services.AddSubscription<AllStreamSubscription, AllStreamSubscriptionOptions>(
             "BookingsProjections",
             builder => builder
+                .Configure(cfg => cfg.ConcurrencyLimit = 2)
                 .AddEventHandler<BookingStateProjection>()
                 .AddEventHandler<MyBookingsProjection>()
                 .WithPartitioningByStream(2)
         );
-
+        
         services.AddSubscription<StreamSubscription, StreamSubscriptionOptions>(
             "PaymentIntegration",
             builder => builder
@@ -57,6 +58,7 @@ public static class Registrations {
     public static void AddOpenTelemetry(this IServiceCollection services) {
         services.AddOpenTelemetryMetrics(
             builder => builder
+                .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("bookings"))
                 .AddAspNetCoreInstrumentation()
                 .AddEventuous()
                 .AddEventuousSubscriptions()

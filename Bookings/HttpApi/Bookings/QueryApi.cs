@@ -13,7 +13,7 @@ public class QueryApi : ControllerBase {
     [HttpGet]
     [Route("{id}")]
     public async Task<BookingState> GetBooking(string id, CancellationToken cancellationToken) {
-        var booking = await _store.Load<Booking, BookingState, BookingId>(new BookingId(id), cancellationToken);
+        var booking = await _store.Load<Booking>(new BookingId(id), cancellationToken);
         return booking.State;
     }
 }

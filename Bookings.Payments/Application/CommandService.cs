@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Bookings.Payments.Domain;
 using Eventuous;
 using Eventuous.AspNetCore.Web;
@@ -11,15 +12,23 @@ public class CommandService : ApplicationService<Payment, PaymentState, PaymentI
                 new PaymentId(cmd.PaymentId),
                 cmd.BookingId,
                 new Money(cmd.Amount, cmd.Currency),
-                cmd.Method, 
+                cmd.Method,
                 cmd.Provider
             )
         );
     }
 }
 
-[AggregateCommands(typeof(Payment))]
+// [AggregateCommands(typeof(Payment))]
 public static class PaymentCommands {
     [HttpCommand]
-    public record RecordPayment(string PaymentId, string BookingId, float Amount, string Currency, string Method, string Provider);
+    public record RecordPayment(
+        string                        PaymentId,
+        string                        BookingId,
+        float                         Amount,
+        string                        Currency,
+        string                        Method,
+        string                        Provider,
+        [property: JsonIgnore] string PaidBy
+    );
 }

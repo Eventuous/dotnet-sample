@@ -5,7 +5,7 @@ using Eventuous.Subscriptions.Context;
 
 namespace Bookings.Payments.Integration;
 
-public static class PaymentsShovel {
+public static class PaymentsGateway {
     static readonly StreamName Stream = new("PaymentsIntegration");
     
     public static ValueTask<GatewayContext?> Transform(IMessageConsumeContext original) {

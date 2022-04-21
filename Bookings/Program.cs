@@ -2,6 +2,7 @@ using Bookings;
 using Bookings.Domain.Bookings;
 using Eventuous;
 using Eventuous.AspNetCore;
+using Eventuous.Diagnostics.Logging;
 using NodaTime;
 using NodaTime.Serialization.SystemTextJson;
 using Serilog;
@@ -28,18 +29,19 @@ builder.Services
     .AddJsonOptions(cfg => cfg.JsonSerializerOptions.ConfigureForNodaTime(DateTimeZoneProviders.Tzdb));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 builder.Services.AddOpenTelemetry();
-
 builder.Services.AddEventuous();
 
 var app = builder.Build();
+
+app.UseSerilogRequestLogging();
 app.AddEventuousLogs();
-
 app.UseSwagger().UseSwaggerUI();
-
 app.MapControllers();
 app.UseOpenTelemetryPrometheusScrapingEndpoint();
+
+var factory  = app.Services.GetRequiredService<ILoggerFactory>();
+var listener = new LoggingEventListener(factory, "OpenTelemetry");
 
 try {
     app.Run("http://*:5003");
@@ -51,4 +53,5 @@ catch (Exception e) {
 }
 finally {
     Log.CloseAndFlush();
+    listener.Dispose();
 }
