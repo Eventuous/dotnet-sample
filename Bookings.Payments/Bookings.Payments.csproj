@@ -6,6 +6,7 @@
         <PackageReference Include="Eventuous.EventStore" Version="$(EventuousVersion)" />
         <PackageReference Include="Eventuous.Diagnostics.OpenTelemetry" Version="$(EventuousVersion)" />
         <PackageReference Include="Eventuous.Projections.MongoDB" Version="$(EventuousVersion)" />
+        <PackageReference Include="MongoDB.Driver.Core.Extensions.OpenTelemetry" Version="1.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
         <PackageReference Include="OpenTelemetry.Exporter.Prometheus" Version="1.2.0-rc4" />
         <PackageReference Include="OpenTelemetry.Exporter.Zipkin" Version="1.2.0-rc4" />

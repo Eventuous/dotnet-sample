@@ -4,8 +4,8 @@ using Serilog.Events;
 namespace Bookings.Payments.Infrastructure;
 
 public static class Logging {
-    public static void ConfigureLog() {
-        Log.Logger = new LoggerConfiguration()
+    public static void ConfigureLog()
+        => Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Debug()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
             .MinimumLevel.Override("Microsoft.AspNetCore.Hosting.Diagnostics", LogEventLevel.Warning)
@@ -14,8 +14,8 @@ public static class Logging {
             .MinimumLevel.Override("EventStore", LogEventLevel.Information)
             .Enrich.FromLogContext()
             .WriteTo.Console(
-                outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} <s:{SourceContext}>{NewLine}{Exception}"
+                outputTemplate:
+                "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} <s:{SourceContext}>{NewLine}{Exception}"
             )
             .CreateLogger();
-    }
 }

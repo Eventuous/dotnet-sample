@@ -1,10 +1,12 @@
 using MongoDB.Driver;
+using MongoDB.Driver.Core.Extensions.DiagnosticSources;
 
 namespace Bookings.Payments.Infrastructure;
 
 public static class Mongo {
-    public static IMongoDatabase ConfigureMongo() {
-        var settings = MongoClientSettings.FromConnectionString("mongodb://mongoadmin:secret@localhost:27017");
-        return new MongoClient(settings).GetDatabase("payments");
+    public static IMongoDatabase ConfigureMongo(IConfiguration configuration) {
+        var settings = MongoClientSettings.FromConnectionString(configuration["Mongo:ConnectionString"]);
+        settings.ClusterConfigurator = cb => cb.Subscribe(new DiagnosticsActivityEventSubscriber());
+        return new MongoClient(settings).GetDatabase(configuration["Mongo:Database"]);
     }
 }

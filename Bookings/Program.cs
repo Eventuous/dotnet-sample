@@ -30,7 +30,7 @@ builder.Services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddOpenTelemetry();
-builder.Services.AddEventuous();
+builder.Services.AddEventuous(builder.Configuration);
 
 var app = builder.Build();
 

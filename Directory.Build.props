@@ -3,6 +3,6 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <EventuousVersion>0.7.1</EventuousVersion>
+        <EventuousVersion>0.8.3</EventuousVersion>
     </PropertyGroup>
 </Project>

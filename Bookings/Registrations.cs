@@ -20,14 +20,14 @@ using OpenTelemetry.Trace;
 namespace Bookings;
 
 public static class Registrations {
-    public static void AddEventuous(this IServiceCollection services) {
+    public static void AddEventuous(this IServiceCollection services, IConfiguration configuration) {
         DefaultEventSerializer.SetDefaultSerializer(
             new DefaultEventSerializer(
                 new JsonSerializerOptions(JsonSerializerDefaults.Web).ConfigureForNodaTime(DateTimeZoneProviders.Tzdb)
             )
         );
 
-        services.AddEventStoreClient("esdb://localhost:2113?tls=false");
+        services.AddEventStoreClient(configuration["EventStore:ConnectionString"]);
         services.AddAggregateStore<EsdbEventStore>();
         services.AddApplicationService<BookingsCommandService, Booking>();
 
@@ -35,7 +35,7 @@ public static class Registrations {
 
         services.AddSingleton<Services.ConvertCurrency>((from, currency) => new Money(from.Amount * 2, currency));
 
-        services.AddSingleton(Mongo.ConfigureMongo());
+        services.AddSingleton(Mongo.ConfigureMongo(configuration));
         services.AddCheckpointStore<MongoCheckpointStore>();
 
         services.AddSubscription<AllStreamSubscription, AllStreamSubscriptionOptions>(
@@ -62,6 +62,7 @@ public static class Registrations {
                 .AddAspNetCoreInstrumentation()
                 .AddEventuous()
                 .AddEventuousSubscriptions()
+                .AddOtlpExporter()
                 .AddPrometheusExporter()
         );
 
@@ -73,7 +74,7 @@ public static class Registrations {
                 .AddMongoDBInstrumentation()
                 .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("bookings"))
                 .SetSampler(new AlwaysOnSampler())
-                .AddZipkinExporter()
+                .AddOtlpExporter()
         );
     }
 }
