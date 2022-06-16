@@ -42,6 +42,7 @@ public static class Registrations {
             "BookingsProjections",
             builder => builder
                 .Configure(cfg => cfg.ConcurrencyLimit = 2)
+                .UseCheckpointStore<MongoCheckpointStore>()
                 .AddEventHandler<BookingStateProjection>()
                 .AddEventHandler<MyBookingsProjection>()
                 .WithPartitioningByStream(2)

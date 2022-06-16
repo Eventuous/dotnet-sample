@@ -44,7 +44,7 @@ var factory  = app.Services.GetRequiredService<ILoggerFactory>();
 var listener = new LoggingEventListener(factory, "OpenTelemetry");
 
 try {
-    app.Run("http://*:5003");
+    app.Run("http://*:5051");
     return 0;
 }
 catch (Exception e) {
