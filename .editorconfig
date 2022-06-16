@@ -1,0 +1,6 @@
+
+[*]
+
+# ReSharper properties
+resharper_instance_members_qualify_declared_in = this_class
+resharper_wrap_after_invocation_lpar = false

@@ -16,16 +16,14 @@ public class MyBookingsProjection : MongoProjection<MyBookings> {
 
         On<V1.BookingCancelled>(
             b => b.UpdateOne
-                .Filter(
-                    (evt, doc)
-                        => doc.Bookings.Select(booking => booking.BookingId).Contains(evt.BookingId)
+                .Filter((evt, doc) =>
+                    doc.Bookings.Select(booking => booking.BookingId).Contains(evt.BookingId)
                 )
-                .Update(
-                    (evt, update) =>
-                        update.PullFilter(
-                            x => x.Bookings,
-                            x => x.BookingId == evt.BookingId
-                        )
+                .Update((evt, update) =>
+                    update.PullFilter(
+                        x => x.Bookings,
+                        x => x.BookingId == evt.BookingId
+                    )
                 )
         );
     }
