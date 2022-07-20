@@ -24,6 +24,4 @@ public record PaymentState : AggregateState<PaymentState> {
     }
 }
 
-public record PaymentId : AggregateId {
-    public PaymentId(string value) : base(value) { }
-}
+public record PaymentId(string Value) : AggregateId(Value);
