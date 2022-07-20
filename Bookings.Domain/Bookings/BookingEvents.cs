@@ -7,7 +7,6 @@ public static class BookingEvents {
     public static class V1 {
         [EventType("V1.RoomBooked")]
         public record RoomBooked(
-            string         BookingId,
             string         GuestId,
             string         RoomId,
             LocalDate      CheckInDate,
@@ -21,7 +20,6 @@ public static class BookingEvents {
 
         [EventType("V1.PaymentRecorded")]
         public record PaymentRecorded(
-            string         BookingId,
             float          PaidAmount,
             float          Outstanding,
             string         Currency,
@@ -31,9 +29,9 @@ public static class BookingEvents {
         );
 
         [EventType("V1.FullyPaid")]
-        public record BookingFullyPaid(string BookingId, DateTimeOffset FullyPaidAt);
+        public record BookingFullyPaid(DateTimeOffset FullyPaidAt);
 
         [EventType("V1.BookingCancelled")]
-        public record BookingCancelled(string BookingId, string CancelledBy, DateTimeOffset CancelledAt);
+        public record BookingCancelled(string CancelledBy, DateTimeOffset CancelledAt);
     }
 }

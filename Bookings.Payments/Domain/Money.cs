@@ -4,10 +4,11 @@ namespace Bookings.Payments.Domain;
 
 public record Money {
     public float  Amount   { get; internal init; }
-    public string Currency { get; internal init; }
+    public string Currency { get; internal init; } = null!;
 
     static readonly string[] SupportedCurrencies = { "USD", "GPB", "EUR" };
 
+    // ReSharper disable once UnusedMember.Global
     internal Money() { }
 
     public Money(float amount, string currency) {

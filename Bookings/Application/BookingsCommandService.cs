@@ -9,6 +9,7 @@ namespace Bookings.Application;
 public class BookingsCommandService : ApplicationService<Booking, BookingState, BookingId> {
     public BookingsCommandService(IAggregateStore store, Services.IsRoomAvailable isRoomAvailable) : base(store) {
         OnNewAsync<BookRoom>(
+            cmd => new BookingId(cmd.BookingId),
             (booking, cmd, _) => booking.BookRoom(
                 new BookingId(cmd.BookingId),
                 cmd.GuestId,

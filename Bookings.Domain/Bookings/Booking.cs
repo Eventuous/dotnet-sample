@@ -4,7 +4,7 @@ using static Bookings.Domain.Services;
 
 namespace Bookings.Domain.Bookings;
 
-public class Booking : Aggregate<BookingState, BookingId> {
+public class Booking : Aggregate<BookingState> {
     public async Task BookRoom(
         BookingId       bookingId,
         string          guestId,
@@ -22,7 +22,6 @@ public class Booking : Aggregate<BookingState, BookingId> {
 
         Apply(
             new V1.RoomBooked(
-                bookingId,
                 guestId,
                 roomId,
                 period.CheckIn,
@@ -52,7 +51,6 @@ public class Booking : Aggregate<BookingState, BookingId> {
 
         Apply(
             new V1.PaymentRecorded(
-                State.Id,
                 paid.Amount,
                 outstanding.Amount,
                 paid.Currency,
@@ -68,7 +66,7 @@ public class Booking : Aggregate<BookingState, BookingId> {
     void MarkFullyPaidIfNecessary(DateTimeOffset when) {
         if (State.Outstanding.Amount != 0) return;
 
-        Apply(new V1.BookingFullyPaid(State.Id, when));
+        Apply(new V1.BookingFullyPaid(when));
     }
 
     static async Task EnsureRoomAvailable(RoomId roomId, StayPeriod period, IsRoomAvailable isRoomAvailable) {

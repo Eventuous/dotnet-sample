@@ -3,4 +3,6 @@
 
 # ReSharper properties
 resharper_instance_members_qualify_declared_in = this_class
+resharper_int_align_assignments = false
+resharper_use_heuristics_for_body_style = true
 resharper_wrap_after_invocation_lpar = false

@@ -2,9 +2,9 @@ using System.Collections.Immutable;
 using Eventuous;
 using static Bookings.Domain.Bookings.BookingEvents;
 
-namespace Bookings.Domain.Bookings; 
+namespace Bookings.Domain.Bookings;
 
-public record BookingState : AggregateState<BookingState, BookingId> {
+public record BookingState : AggregateState<BookingState> {
     public string     GuestId     { get; init; }
     public RoomId     RoomId      { get; init; }
     public StayPeriod Period      { get; init; }
@@ -14,7 +14,8 @@ public record BookingState : AggregateState<BookingState, BookingId> {
 
     public ImmutableList<PaymentRecord> PaymentRecords { get; init; } = ImmutableList<PaymentRecord>.Empty;
 
-    internal bool HasPaymentBeenRecorded(string paymentId) => PaymentRecords.Any(x => x.PaymentId == paymentId);
+    internal bool HasPaymentBeenRecorded(string paymentId)
+        => PaymentRecords.Any(x => x.PaymentId == paymentId);
 
     public BookingState() {
         On<V1.RoomBooked>(HandleBooked);
@@ -32,7 +33,6 @@ public record BookingState : AggregateState<BookingState, BookingId> {
 
     static BookingState HandleBooked(BookingState state, V1.RoomBooked booked)
         => state with {
-            Id = new BookingId(booked.BookingId),
             RoomId = new RoomId(booked.RoomId),
             Period = new StayPeriod(booked.CheckInDate, booked.CheckOutDate),
             GuestId = booked.GuestId,

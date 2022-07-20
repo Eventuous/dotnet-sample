@@ -8,6 +8,7 @@ namespace Bookings.Payments.Application;
 public class CommandService : ApplicationService<Payment, PaymentState, PaymentId> {
     public CommandService(IAggregateStore store) : base(store) {
         OnNew<PaymentCommands.RecordPayment>(
+            cmd => new PaymentId(cmd.PaymentId),
             (payment, cmd) => payment.ProcessPayment(
                 new PaymentId(cmd.PaymentId),
                 cmd.BookingId,
