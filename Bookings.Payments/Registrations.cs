@@ -12,7 +12,7 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
-namespace Bookings.Payments; 
+namespace Bookings.Payments;
 
 public static class Registrations {
     public static void AddServices(this IServiceCollection services, IConfiguration configuration) {
@@ -29,7 +29,7 @@ public static class Registrations {
                 PaymentsGateway.Transform
             );
     }
-    
+
     public static void AddOpenTelemetry(this IServiceCollection services) {
         services.AddOpenTelemetryMetrics(
             builder => builder
@@ -38,6 +38,7 @@ public static class Registrations {
                 .AddEventuousSubscriptions()
                 .AddPrometheusExporter()
         );
+
         services.AddOpenTelemetryTracing(
             builder => builder
                 .AddAspNetCoreInstrumentation()

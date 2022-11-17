@@ -23,7 +23,9 @@ public static class Registrations {
     public static void AddEventuous(this IServiceCollection services, IConfiguration configuration) {
         DefaultEventSerializer.SetDefaultSerializer(
             new DefaultEventSerializer(
-                new JsonSerializerOptions(JsonSerializerDefaults.Web).ConfigureForNodaTime(DateTimeZoneProviders.Tzdb)
+                new JsonSerializerOptions(JsonSerializerDefaults.Web).ConfigureForNodaTime(
+                    DateTimeZoneProviders.Tzdb
+                )
             )
         );
 
@@ -33,7 +35,9 @@ public static class Registrations {
 
         services.AddSingleton<Services.IsRoomAvailable>((id, period) => new ValueTask<bool>(true));
 
-        services.AddSingleton<Services.ConvertCurrency>((from, currency) => new Money(from.Amount * 2, currency));
+        services.AddSingleton<Services.ConvertCurrency>((from, currency)
+            => new Money(from.Amount * 2, currency)
+        );
 
         services.AddSingleton(Mongo.ConfigureMongo(configuration));
         services.AddCheckpointStore<MongoCheckpointStore>();
@@ -41,14 +45,13 @@ public static class Registrations {
         services.AddSubscription<AllStreamSubscription, AllStreamSubscriptionOptions>(
             "BookingsProjections",
             builder => builder
-                .Configure(cfg => cfg.ConcurrencyLimit = 2)
                 .UseCheckpointStore<MongoCheckpointStore>()
                 .AddEventHandler<BookingStateProjection>()
                 .AddEventHandler<MyBookingsProjection>()
                 .WithPartitioningByStream(2)
         );
-        
-        services.AddSubscription<StreamSubscription, StreamSubscriptionOptions>(
+
+        services.AddSubscription<StreamPersistentSubscription, StreamPersistentSubscriptionOptions>(
             "PaymentIntegration",
             builder => builder
                 .Configure(x => x.StreamName = PaymentsIntegrationHandler.Stream)
@@ -58,6 +61,7 @@ public static class Registrations {
 
     public static void AddOpenTelemetry(this IServiceCollection services) {
         var otelEnabled = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT") != null;
+
         services.AddOpenTelemetryMetrics(
             builder => {
                 builder
