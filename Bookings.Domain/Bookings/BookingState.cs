@@ -1,15 +1,18 @@
 using System.Collections.Immutable;
 using Eventuous;
 using static Bookings.Domain.Bookings.BookingEvents;
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable NotAccessedPositionalProperty.Global
 
 namespace Bookings.Domain.Bookings;
 
-public record BookingState : AggregateState<BookingState> {
-    public string     GuestId     { get; init; }
-    public RoomId     RoomId      { get; init; }
-    public StayPeriod Period      { get; init; }
-    public Money      Price       { get; init; }
-    public Money      Outstanding { get; init; }
+public record BookingState : State<BookingState> {
+    public string     GuestId     { get; init; } = null!;
+    public RoomId     RoomId      { get; init; } = null!;
+    public StayPeriod Period      { get; init; } = null!;
+    public Money      Price       { get; init; } = null!;
+    public Money      Outstanding { get; init; } = null!;
     public bool       Paid        { get; init; }
 
     public ImmutableList<PaymentRecord> PaymentRecords { get; init; } = ImmutableList<PaymentRecord>.Empty;
@@ -36,7 +39,7 @@ public record BookingState : AggregateState<BookingState> {
             RoomId = new RoomId(booked.RoomId),
             Period = new StayPeriod(booked.CheckInDate, booked.CheckOutDate),
             GuestId = booked.GuestId,
-            Price = new Money { Amount       = booked.BookingPrice, Currency      = booked.Currency },
+            Price = new Money { Amount = booked.BookingPrice, Currency = booked.Currency },
             Outstanding = new Money { Amount = booked.OutstandingAmount, Currency = booked.Currency }
         };
 }
