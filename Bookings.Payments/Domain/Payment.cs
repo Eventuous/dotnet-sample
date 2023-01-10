@@ -10,7 +10,7 @@ public class Payment : Aggregate<PaymentState> {
         => Apply(new PaymentRecorded(paymentId, bookingId, amount.Amount, amount.Currency, method, provider));
 }
 
-public record PaymentState : AggregateState<PaymentState> {
+public record PaymentState : State<PaymentState> {
     public string BookingId { get; init; } = null!;
     public float  Amount    { get; init; }
 

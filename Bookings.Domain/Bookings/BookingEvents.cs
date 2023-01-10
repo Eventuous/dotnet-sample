@@ -31,6 +31,9 @@ public static class BookingEvents {
         [EventType("V1.FullyPaid")]
         public record BookingFullyPaid(DateTimeOffset FullyPaidAt);
 
+        [EventType("V1.Overpaid")]
+        public record BookingOverpaid(DateTimeOffset OverpaidAt);
+
         [EventType("V1.BookingCancelled")]
         public record BookingCancelled(string CancelledBy, DateTimeOffset CancelledAt);
     }

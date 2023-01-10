@@ -9,7 +9,7 @@ public static class Mongo {
         NodaTimeSerializers.Register();
         var config = configuration.GetSection("Mongo").Get<MongoSettings>();
 
-        var settings = MongoClientSettings.FromConnectionString(config.ConnectionString);
+        var settings = MongoClientSettings.FromConnectionString(config!.ConnectionString);
 
         if (config.User != null && config.Password != null) {
             settings.Credential = new MongoCredential(

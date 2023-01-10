@@ -6,13 +6,12 @@ namespace Bookings.Domain.Bookings;
 
 public class Booking : Aggregate<BookingState> {
     public async Task BookRoom(
-        BookingId       bookingId,
-        string          guestId,
-        RoomId          roomId,
-        StayPeriod      period,
-        Money           price,
-        Money           prepaid,
-        DateTimeOffset  bookedAt,
+        string guestId,
+        RoomId roomId,
+        StayPeriod period,
+        Money price,
+        Money prepaid,
+        DateTimeOffset bookedAt,
         IsRoomAvailable isRoomAvailable
     ) {
         EnsureDoesntExist();
@@ -33,20 +32,20 @@ public class Booking : Aggregate<BookingState> {
                 bookedAt
             )
         );
-            
+
         MarkFullyPaidIfNecessary(bookedAt);
     }
 
     public void RecordPayment(
-        Money          paid,
-        string         paymentId,
-        string         paidBy,
+        Money paid,
+        string paymentId,
+        string paidBy,
         DateTimeOffset paidAt
     ) {
         EnsureExists();
 
-        if (State.HasPaymentBeenRecorded(paymentId)) return;
-            
+        if (State.HasPaymentBeenRegistered(paymentId)) return;
+
         var outstanding = State.Outstanding - paid;
 
         Apply(
@@ -59,14 +58,21 @@ public class Booking : Aggregate<BookingState> {
                 paidAt
             )
         );
-            
+
         MarkFullyPaidIfNecessary(paidAt);
+        MarkOverpaid(paidAt);
     }
 
     void MarkFullyPaidIfNecessary(DateTimeOffset when) {
-        if (State.Outstanding.Amount != 0) return;
+        if (State.Outstanding.Amount > 0) return;
 
         Apply(new V1.BookingFullyPaid(when));
+    }
+
+    void MarkOverpaid(DateTimeOffset when) {
+        if (State.Outstanding.Amount < 0) return;
+
+        Apply(new V1.BookingOverpaid(when));
     }
 
     static async Task EnsureRoomAvailable(RoomId roomId, StayPeriod period, IsRoomAvailable isRoomAvailable) {

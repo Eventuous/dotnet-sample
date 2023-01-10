@@ -14,12 +14,11 @@ public record BookingState : State<BookingState> {
     public Money      Price       { get; init; } = null!;
     public Money      Outstanding { get; init; } = null!;
     public bool       Paid        { get; init; }
-
-    public ImmutableList<PaymentRecord> PaymentRecords { get; init; } = ImmutableList<PaymentRecord>.Empty;
-
-    internal bool HasPaymentBeenRecorded(string paymentId)
-        => PaymentRecords.Any(x => x.PaymentId == paymentId);
-
+    
+    public ImmutableArray<PaymentRecord> Payments { get; init; } = ImmutableArray<PaymentRecord>.Empty;
+    
+    internal bool HasPaymentBeenRegistered(string paymentId) => Payments.Any(x => x.PaymentId == paymentId);
+    
     public BookingState() {
         On<V1.RoomBooked>(HandleBooked);
         On<V1.PaymentRecorded>(HandlePayment);
@@ -29,9 +28,7 @@ public record BookingState : State<BookingState> {
     static BookingState HandlePayment(BookingState state, V1.PaymentRecorded e)
         => state with {
             Outstanding = new Money { Amount = e.Outstanding, Currency = e.Currency },
-            PaymentRecords = state.PaymentRecords.Add(
-                new PaymentRecord(e.PaymentId, new Money { Amount = e.PaidAmount, Currency = e.Currency })
-            )
+            Payments = state.Payments.Add(new PaymentRecord(e.PaymentId, new Money(e.PaidAmount, e.Currency)))
         };
 
     static BookingState HandleBooked(BookingState state, V1.RoomBooked booked)

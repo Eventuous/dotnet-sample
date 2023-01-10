@@ -4,7 +4,7 @@ namespace Bookings.Domain;
 
 public record Money {
     public float  Amount   { get; internal init; }
-    public string Currency { get; internal init; }
+    public string Currency { get; internal init; } = null!;
 
     static readonly string[] SupportedCurrencies = {"USD", "GPB", "EUR"};
 
