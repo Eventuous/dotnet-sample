@@ -64,15 +64,13 @@ public class Booking : Aggregate<BookingState> {
     }
 
     void MarkFullyPaidIfNecessary(DateTimeOffset when) {
-        if (State.Outstanding.Amount > 0) return;
-
-        Apply(new V1.BookingFullyPaid(when));
+        if (State.Outstanding.Amount <= 0)
+            Apply(new V1.BookingFullyPaid(when));
     }
 
     void MarkOverpaid(DateTimeOffset when) {
-        if (State.Outstanding.Amount < 0) return;
-
-        Apply(new V1.BookingOverpaid(when));
+        if (State.Outstanding.Amount < 0)
+            Apply(new V1.BookingOverpaid(when));
     }
 
     static async Task EnsureRoomAvailable(RoomId roomId, StayPeriod period, IsRoomAvailable isRoomAvailable) {
