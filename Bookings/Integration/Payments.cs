@@ -9,9 +9,9 @@ namespace Bookings.Integration;
 public class PaymentsIntegrationHandler : EventHandler {
     public static readonly StreamName Stream = new("PaymentsIntegration");
 
-    readonly IApplicationService<Booking> _applicationService;
+    readonly ICommandService<Booking> _applicationService;
 
-    public PaymentsIntegrationHandler(IApplicationService<Booking> applicationService) {
+    public PaymentsIntegrationHandler(ICommandService<Booking> applicationService) {
         _applicationService = applicationService;
         On<BookingPaymentRecorded>(async ctx => await HandlePayment(ctx.Message, ctx.CancellationToken));
     }

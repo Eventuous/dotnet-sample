@@ -9,7 +9,7 @@ namespace Bookings.HttpApi.Bookings;
 
 [Route("/booking")]
 public class CommandApi : CommandHttpApiBase<Booking> {
-    public CommandApi(IApplicationService<Booking> service) : base(service) { }
+    public CommandApi(ICommandService<Booking> service) : base(service) { }
 
     [HttpPost]
     [Route("book")]
