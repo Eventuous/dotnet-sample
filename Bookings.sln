@@ -6,26 +6,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookings.Domain", "Bookings
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookings.Payments", "Bookings.Payments\Bookings.Payments.csproj", "{EBD8B561-B354-4FDB-BF88-0BF0681F5530}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Eventuous", "Eventuous", "{0F347775-11A5-4797-9B1A-DFE3B8E1BF2B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventuous.Domain", "..\eventuous\src\Core\src\Eventuous.Domain\Eventuous.Domain.csproj", "{5B69E6F2-39D5-4082-9551-EF10B56CCCC5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventuous.Shared", "..\eventuous\src\Core\src\Eventuous.Shared\Eventuous.Shared.csproj", "{F8A89937-5691-459B-8550-AFA39848D27E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventuous.EventStore", "..\eventuous\src\EventStore\src\Eventuous.EventStore\Eventuous.EventStore.csproj", "{BA42BB5F-38F8-42E0-81C1-3B219DC41081}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventuous.Diagnostics.OpenTelemetry", "..\eventuous\src\Diagnostics\src\Eventuous.Diagnostics.OpenTelemetry\Eventuous.Diagnostics.OpenTelemetry.csproj", "{9220D708-F237-46B7-9F09-3ACE13823F5F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventuous.Projections.MongoDB", "..\eventuous\src\Mongo\src\Eventuous.Projections.MongoDB\Eventuous.Projections.MongoDB.csproj", "{897736E9-8A56-4E17-A034-953D2EC396E3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventuous.AspNetCore.Web", "..\eventuous\src\Extensions\src\Eventuous.AspNetCore.Web\Eventuous.AspNetCore.Web.csproj", "{879101FA-0B7D-4939-A6AE-6C132F1EEFA2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventuous.Spyglass", "..\eventuous\src\Experimental\src\Eventuous.Spyglass\Eventuous.Spyglass.csproj", "{6001AA5D-C50B-48C3-A8A6-22CF5B4391DD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventuous.Application", "..\eventuous\src\Core\src\Eventuous.Application\Eventuous.Application.csproj", "{238AE842-490E-4E64-8E55-61559B8E2326}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eventuous.AspNetCore", "..\eventuous\src\Extensions\src\Eventuous.AspNetCore\Eventuous.AspNetCore.csproj", "{69B7A3E0-D995-49CD-AFB8-3B608CA6F810}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,52 +24,7 @@ Global
 		{EBD8B561-B354-4FDB-BF88-0BF0681F5530}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBD8B561-B354-4FDB-BF88-0BF0681F5530}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBD8B561-B354-4FDB-BF88-0BF0681F5530}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5B69E6F2-39D5-4082-9551-EF10B56CCCC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5B69E6F2-39D5-4082-9551-EF10B56CCCC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5B69E6F2-39D5-4082-9551-EF10B56CCCC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5B69E6F2-39D5-4082-9551-EF10B56CCCC5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F8A89937-5691-459B-8550-AFA39848D27E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8A89937-5691-459B-8550-AFA39848D27E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F8A89937-5691-459B-8550-AFA39848D27E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8A89937-5691-459B-8550-AFA39848D27E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BA42BB5F-38F8-42E0-81C1-3B219DC41081}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BA42BB5F-38F8-42E0-81C1-3B219DC41081}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BA42BB5F-38F8-42E0-81C1-3B219DC41081}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BA42BB5F-38F8-42E0-81C1-3B219DC41081}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9220D708-F237-46B7-9F09-3ACE13823F5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9220D708-F237-46B7-9F09-3ACE13823F5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9220D708-F237-46B7-9F09-3ACE13823F5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9220D708-F237-46B7-9F09-3ACE13823F5F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{897736E9-8A56-4E17-A034-953D2EC396E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{897736E9-8A56-4E17-A034-953D2EC396E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{897736E9-8A56-4E17-A034-953D2EC396E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{897736E9-8A56-4E17-A034-953D2EC396E3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{879101FA-0B7D-4939-A6AE-6C132F1EEFA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{879101FA-0B7D-4939-A6AE-6C132F1EEFA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{879101FA-0B7D-4939-A6AE-6C132F1EEFA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{879101FA-0B7D-4939-A6AE-6C132F1EEFA2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6001AA5D-C50B-48C3-A8A6-22CF5B4391DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6001AA5D-C50B-48C3-A8A6-22CF5B4391DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6001AA5D-C50B-48C3-A8A6-22CF5B4391DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6001AA5D-C50B-48C3-A8A6-22CF5B4391DD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{238AE842-490E-4E64-8E55-61559B8E2326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{238AE842-490E-4E64-8E55-61559B8E2326}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{238AE842-490E-4E64-8E55-61559B8E2326}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{238AE842-490E-4E64-8E55-61559B8E2326}.Release|Any CPU.Build.0 = Release|Any CPU
-		{69B7A3E0-D995-49CD-AFB8-3B608CA6F810}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{69B7A3E0-D995-49CD-AFB8-3B608CA6F810}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{69B7A3E0-D995-49CD-AFB8-3B608CA6F810}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{69B7A3E0-D995-49CD-AFB8-3B608CA6F810}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{5B69E6F2-39D5-4082-9551-EF10B56CCCC5} = {0F347775-11A5-4797-9B1A-DFE3B8E1BF2B}
-		{F8A89937-5691-459B-8550-AFA39848D27E} = {0F347775-11A5-4797-9B1A-DFE3B8E1BF2B}
-		{BA42BB5F-38F8-42E0-81C1-3B219DC41081} = {0F347775-11A5-4797-9B1A-DFE3B8E1BF2B}
-		{9220D708-F237-46B7-9F09-3ACE13823F5F} = {0F347775-11A5-4797-9B1A-DFE3B8E1BF2B}
-		{897736E9-8A56-4E17-A034-953D2EC396E3} = {0F347775-11A5-4797-9B1A-DFE3B8E1BF2B}
-		{879101FA-0B7D-4939-A6AE-6C132F1EEFA2} = {0F347775-11A5-4797-9B1A-DFE3B8E1BF2B}
-		{6001AA5D-C50B-48C3-A8A6-22CF5B4391DD} = {0F347775-11A5-4797-9B1A-DFE3B8E1BF2B}
-		{238AE842-490E-4E64-8E55-61559B8E2326} = {0F347775-11A5-4797-9B1A-DFE3B8E1BF2B}
-		{69B7A3E0-D995-49CD-AFB8-3B608CA6F810} = {0F347775-11A5-4797-9B1A-DFE3B8E1BF2B}
 	EndGlobalSection
 EndGlobal

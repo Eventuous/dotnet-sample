@@ -1,11 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
-<!--        <PackageReference Include="Eventuous.Domain" Version="$(EventuousVersion)" />-->
-<!--        <PackageReference Include="Eventuous.Shared" Version="$(EventuousVersion)" />-->
+        <PackageReference Include="Eventuous.Domain" Version="$(EventuousVersion)" />
+        <PackageReference Include="Eventuous.Shared" Version="$(EventuousVersion)" />
         <PackageReference Include="NodaTime" Version="3.1.6" />
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\..\eventuous\src\Core\src\Eventuous.Domain\Eventuous.Domain.csproj" />
-      <ProjectReference Include="..\..\eventuous\src\Core\src\Eventuous.Shared\Eventuous.Shared.csproj" />
     </ItemGroup>
 </Project>

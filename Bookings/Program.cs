@@ -42,7 +42,6 @@ builder.Services.Configure<JsonOptions>(options
 var app = builder.Build();
 
 app.UseSerilogRequestLogging();
-app.AddEventuousLogs();
 app.UseSwagger().UseSwaggerUI();
 app.MapControllers();
 app.UseOpenTelemetryPrometheusScrapingEndpoint();
