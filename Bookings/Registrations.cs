@@ -59,36 +59,38 @@ public static class Registrations {
         );
     }
 
-    public static void AddOpenTelemetry(this IServiceCollection services) {
+    public static void AddTelemetry(this IServiceCollection services) {
         var otelEnabled = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT") != null;
 
-        services.AddOpenTelemetryMetrics(
-            builder => {
-                builder
-                    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("bookings"))
-                    .AddAspNetCoreInstrumentation()
-                    .AddEventuous()
-                    .AddEventuousSubscriptions()
-                    .AddPrometheusExporter();
-                if (otelEnabled) builder.AddOtlpExporter();
-            }
-        );
+        services.AddOpenTelemetry()
+            .WithMetrics(
+                builder => {
+                    builder
+                        .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("bookings"))
+                        .AddAspNetCoreInstrumentation()
+                        .AddEventuous()
+                        .AddEventuousSubscriptions()
+                        .AddPrometheusExporter();
+                    if (otelEnabled) builder.AddOtlpExporter();
+                }
+            );
 
-        services.AddOpenTelemetryTracing(
-            builder => {
-                builder
-                    .AddAspNetCoreInstrumentation()
-                    .AddGrpcClientInstrumentation()
-                    .AddEventuousTracing()
-                    .AddMongoDBInstrumentation()
-                    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("bookings"))
-                    .SetSampler(new AlwaysOnSampler());
+        services.AddOpenTelemetry()
+            .WithTracing(
+                builder => {
+                    builder
+                        .AddAspNetCoreInstrumentation()
+                        .AddGrpcClientInstrumentation()
+                        .AddEventuousTracing()
+                        .AddMongoDBInstrumentation()
+                        .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("bookings"))
+                        .SetSampler(new AlwaysOnSampler());
 
-                if (otelEnabled)
-                    builder.AddOtlpExporter();
-                else
-                    builder.AddZipkinExporter();
-            }
-        );
+                    if (otelEnabled)
+                        builder.AddOtlpExporter();
+                    else
+                        builder.AddZipkinExporter();
+                }
+            );
     }
 }

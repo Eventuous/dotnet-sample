@@ -14,7 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // OpenTelemetry instrumentation must be added before adding Eventuous services
-builder.Services.AddOpenTelemetry();
+builder.Services.AddTelemetry();
 
 builder.Services.AddServices(builder.Configuration);
 builder.Host.UseSerilog();

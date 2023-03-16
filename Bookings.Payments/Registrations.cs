@@ -30,23 +30,25 @@ public static class Registrations {
             );
     }
 
-    public static void AddOpenTelemetry(this IServiceCollection services) {
-        services.AddOpenTelemetryMetrics(
-            builder => builder
-                .AddAspNetCoreInstrumentation()
-                .AddEventuous()
-                .AddEventuousSubscriptions()
-                .AddPrometheusExporter()
-        );
+    public static void AddTelemetry(this IServiceCollection services) {
+        services.AddOpenTelemetry()
+            .WithMetrics(
+                builder => builder
+                    .AddAspNetCoreInstrumentation()
+                    .AddEventuous()
+                    .AddEventuousSubscriptions()
+                    .AddPrometheusExporter()
+            );
 
-        services.AddOpenTelemetryTracing(
-            builder => builder
-                .AddAspNetCoreInstrumentation()
-                .AddGrpcClientInstrumentation()
-                .AddEventuousTracing()
-                .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("payments"))
-                .SetSampler(new AlwaysOnSampler())
-                .AddZipkinExporter()
-        );
+        services.AddOpenTelemetry()
+            .WithTracing(
+                builder => builder
+                    .AddAspNetCoreInstrumentation()
+                    .AddGrpcClientInstrumentation()
+                    .AddEventuousTracing()
+                    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("payments"))
+                    .SetSampler(new AlwaysOnSampler())
+                    .AddZipkinExporter()
+            );
     }
 }
