@@ -45,7 +45,7 @@ app.UseSerilogRequestLogging();
 app.UseSwagger().UseSwaggerUI();
 app.MapControllers();
 // app.UseOpenTelemetryPrometheusScrapingEndpoint();
-app.MapEventuousSpyglass(null);
+app.MapEventuousSpyglass("test!");
 
 var factory  = app.Services.GetRequiredService<ILoggerFactory>();
 var listener = new LoggingEventListener(factory, "OpenTelemetry");
