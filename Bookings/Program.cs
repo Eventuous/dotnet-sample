@@ -44,7 +44,7 @@ var app = builder.Build();
 app.UseSerilogRequestLogging();
 app.UseSwagger().UseSwaggerUI();
 app.MapControllers();
-app.UseOpenTelemetryPrometheusScrapingEndpoint();
+// app.UseOpenTelemetryPrometheusScrapingEndpoint();
 app.MapEventuousSpyglass(null);
 
 var factory  = app.Services.GetRequiredService<ILoggerFactory>();
