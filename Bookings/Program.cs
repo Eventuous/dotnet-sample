@@ -51,7 +51,14 @@ var factory  = app.Services.GetRequiredService<ILoggerFactory>();
 var listener = new LoggingEventListener(factory, "OpenTelemetry");
 
 try {
-    app.Run("http://*:5051");
+    var port = Environment.GetEnvironmentVariable("PORT");
+    if (string.IsNullOrWhiteSpace(port)) {
+        app.Run();
+    }
+    else {
+        var url  = $"http://+:{port}";
+        app.Run(url);
+    }
     return 0;
 }
 catch (Exception e) {
