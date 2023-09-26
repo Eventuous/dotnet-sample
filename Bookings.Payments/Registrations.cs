@@ -24,9 +24,9 @@ public static class Registrations {
         services.AddEventProducer<EventStoreProducer>();
 
         services
-            .AddGateway<AllStreamSubscription, AllStreamSubscriptionOptions, EventStoreProducer>(
-                "IntegrationSubscription",
-                PaymentsGateway.Transform
+            .AddGateway<AllStreamSubscription, AllStreamSubscriptionOptions, EventStoreProducer, EventStoreProduceOptions>(
+                subscriptionId: "IntegrationSubscription",
+                routeAndTransform: PaymentsGateway.Transform
             );
     }
 
