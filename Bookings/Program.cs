@@ -52,13 +52,8 @@ var listener = new LoggingEventListener(factory, "OpenTelemetry");
 
 try {
     var port = Environment.GetEnvironmentVariable("PORT");
-    if (string.IsNullOrWhiteSpace(port)) {
-        app.Run();
-    }
-    else {
-        var url  = $"http://+:{port}";
-        app.Run(url);
-    }
+    var url  = string.IsNullOrWhiteSpace(port) ? null : $"http://+:{port}";
+    app.Run(url);
     return 0;
 }
 catch (Exception e) {
